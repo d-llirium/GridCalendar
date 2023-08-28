@@ -24,8 +24,8 @@ struct ContentView: View {
     var body: some View {
         // MARK: - LazyVGrid
         //Similar to the concept of lazy properties, the Lazy in LazyVGrid and LazyHGrid refers to the fact that the elements of the grid aren’t created until they are needed to display in the view
-        ScrollView {
-            LazyVGrid(columns: layout, pinnedViews: [.sectionHeaders]) { // layout constant as an argument to define the columns for our LazyVGrid structure
+        ScrollView(.horizontal) {
+            LazyHGrid(rows: layout, pinnedViews: [.sectionHeaders]) { // layout constant as an argument to define the columns for our LazyVGrid structure
                 // pinnedViews pins views while scrolling
                 ForEach(year, id: \.name){ month in
                     Section(header: Text(verbatim: month.name).font(.headline)) { // Section view that gives us a header view that we can use to display the name of the month
@@ -33,7 +33,7 @@ struct ContentView: View {
                             Capsule() // create a Capsule with overlay text content that displays a string equal to the value property of the Day
                                 .overlay(Text( "\(day.value)").foregroundColor(.white) )
                                 .foregroundColor(.blue)
-                                .frame(height: 40)
+                                .frame(width: 40)
                         }
                     }
                 }
