@@ -21,6 +21,9 @@ struct ContentView: View {
         // .flexible(minimum: ) reates a column that takes up the available width it has
         //  .adaptive(minimum: ) fits multiple columns inside the width of a single GridItem
         ]
+    let daysOfTheWeek = [
+        "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"
+    ]
     var body: some View {
         // MARK: - LazyVGrid
         //Similar to the concept of lazy properties, the Lazy in LazyVGrid and LazyHGrid refers to the fact that the elements of the grid aren’t created until they are needed to display in the view
@@ -28,7 +31,7 @@ struct ContentView: View {
             LazyVGrid(columns: layout, pinnedViews: [.sectionHeaders]) { // layout constant as an argument to define the columns for our LazyVGrid structure
                 // pinnedViews pins views while scrolling
                 ForEach(year, id: \.name){ month in
-                    Section(header: Text(verbatim: month.name).font(.headline)) { // Section view that gives us a header view that we can use to display the name of the month
+                    Section(header: headerView(header: month.name) ) { // Section view that gives us a header view that we can use to display the name of the month
                         ForEach(month.days) { day in
                             Capsule() // create a Capsule with overlay text content that displays a string equal to the value property of the Day
                                 .overlay(Text( "\(day.value)").foregroundColor(.white) )
@@ -39,6 +42,13 @@ struct ContentView: View {
                 }
             }
         }
+    }
+    func headerView(header: String) -> some View{
+        return HStack {
+            Spacer()
+            Text("\(header)")
+            Spacer()
+        }.padding(.all, 10).background(Color.white).font(.headline)
     }
     struct Day: Identifiable { // Identifiable protocol requires that it has an id value that is unique
         let id = UUID() // UUID structure is built into Foundation and guaranteed to be a unique value to use ForEach structure
