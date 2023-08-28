@@ -9,7 +9,17 @@ import SwiftUI
 
 struct ContentView: View {
     let layout = [
-            GridItem(.fixed(40)) // create a single fixed column of width 40, when used as input for a LazyVGrid = Vertical || create a single fixed row of height 40, when used as input for a LazyHGrid = Horizonta
+        // MARK: - GridItem
+        GridItem(.flexible(minimum: 40)), // create a single fixed column of width 40, when used as input for a LazyVGrid = Vertical || create a single fixed row of height 40, when used as input for a LazyHGrid = Horizontal
+        GridItem(.flexible(minimum: 40)),
+        GridItem(.flexible(minimum: 40)),
+        GridItem(.flexible(minimum: 40)),
+        GridItem(.flexible(minimum: 40)),
+        GridItem(.flexible(minimum: 40)),
+        GridItem(.flexible(minimum: 40))
+        // .fixed() creates a colum with fixed width
+        // .flexible(minimum: ) reates a column that takes up the available width it has
+        //  .adaptive(minimum: ) fits multiple columns inside the width of a single GridItem
         ]
     var body: some View {
         // MARK: - LazyVGrid
