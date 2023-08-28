@@ -8,14 +8,22 @@
 import SwiftUI
 
 struct ContentView: View {
+    let layout = [
+            GridItem(.fixed(40)) // create a single fixed column of width 40, when used as input for a LazyVGrid = Vertical || create a single fixed row of height 40, when used as input for a LazyHGrid = Horizonta
+        ]
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        // MARK: - LazyVGrid
+        //Similar to the concept of lazy properties, the Lazy in LazyVGrid and LazyHGrid refers to the fact that the elements of the grid aren’t created until they are needed to display in the view
+        ScrollView {
+            LazyVGrid(columns: layout) { // layout constant as an argument to define the columns for our LazyVGrid structure
+                ForEach(year[0].days) { day in // the 0 index of the year array, which is equal to the Month of January
+                    Capsule() // create a Capsule with overlay text content that displays a string equal to the value property of the Day
+                        .overlay(Text( "\(day.value)").foregroundColor(.white) )
+                        .foregroundColor(.blue)
+                        .frame(height: 40)
+                }
+            }
         }
-        .padding()
     }
     struct Day: Identifiable { // Identifiable protocol requires that it has an id value that is unique
         let id = UUID() // UUID structure is built into Foundation and guaranteed to be a unique value to use ForEach structure
