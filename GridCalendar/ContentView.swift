@@ -26,11 +26,15 @@ struct ContentView: View {
         //Similar to the concept of lazy properties, the Lazy in LazyVGrid and LazyHGrid refers to the fact that the elements of the grid aren’t created until they are needed to display in the view
         ScrollView {
             LazyVGrid(columns: layout) { // layout constant as an argument to define the columns for our LazyVGrid structure
-                ForEach(year[0].days) { day in // the 0 index of the year array, which is equal to the Month of January
-                    Capsule() // create a Capsule with overlay text content that displays a string equal to the value property of the Day
-                        .overlay(Text( "\(day.value)").foregroundColor(.white) )
-                        .foregroundColor(.blue)
-                        .frame(height: 40)
+                ForEach(year, id: \.name){ month in
+                    Section(header: Text(verbatim: month.name).font(.headline)) { // Section view that gives us a header view that we can use to display the name of the month
+                        ForEach(month.days) { day in
+                            Capsule() // create a Capsule with overlay text content that displays a string equal to the value property of the Day
+                                .overlay(Text( "\(day.value)").foregroundColor(.white) )
+                                .foregroundColor(.blue)
+                                .frame(height: 40)
+                        }
+                    }
                 }
             }
         }
@@ -39,7 +43,7 @@ struct ContentView: View {
         let id = UUID() // UUID structure is built into Foundation and guaranteed to be a unique value to use ForEach structure
         let value: Int // store the order of each particular day of the month
     }
-    struct Month {
+    struct Month { // we don’t have the same name of the month in our year, we can use it as the unique id
         let name: String
         let numberOfDays: Int
         var days: [Day]
